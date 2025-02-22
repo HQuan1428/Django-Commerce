@@ -1,0 +1,51 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body %}
+
+<h2> Create Listting </h2>
+
+<form action="{% url 'create' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" class="form-control" placeholder="Title">
+    </div>
+    <div class="form-group">
+        <label for="url">ImageUrl</label>
+        <input type="url" id="url" name="imageUrl" class="form-control" placeholder="url">
+    </div>
+        
+    <div class="form-group">
+        <label for="description">Description for pokemon</label>
+        <textarea name="description" id="description" class="form-control"></textarea>
+    </div>
+    
+    <div class="form-group">
+        <label for="category" > Categories </label>
+        <select name="category" id="category" class="form-select" multiple >
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.category }}</option>
+            {% endfor %}
+        </select>    
+        <small class="form-text text-muted">
+            Hold down the <strong>Ctrl</strong> (Windows) or <strong>Cmd</strong> (Mac) key to select multiple options.
+        </small>
+    </div>
+    
+    <div class="form-group"></div>
+        <label for="price">Starting price $</label>
+        <input type="text" id="price" class="form-control" name="bid">
+    </div>
+    
+    <br>
+    
+    <div class="form-group d-grid gap-2 d-md-flex justify-content-md-end">
+        <label for="button"></label>
+        <button type="button" id="button" class="btn btn-success" > Add Listing </button> 
+    </div>
+</form>
+
+{% endblock %}
+
+
