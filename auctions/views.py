@@ -9,7 +9,30 @@ from .models import *
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    # Get list pokemon
+    list_pokemons = Listing.objects.all()
+
+    listings = []
+
+    for pokemon in list_pokemons:
+        if not pokemon.isActive:
+            continue 
+        categories = []
+        for category in pokemon.category.all():
+            categories.append(category)
+        listing = {
+            'id': pokemon.id,
+            'title': pokemon.title,
+            'imageUrl':pokemon.imageUrl,
+            'categories': categories,
+        }
+        
+        listings.append(listing)
+        
+    
+    return render(request, "auctions/index.html", {
+        "listings": listings,
+    })
 
 
 def login_view(request):

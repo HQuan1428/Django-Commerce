@@ -1,7 +1,29 @@
 {% extends "auctions/layout.html" %}
 
+
+</style>
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+    <div class="container text-center">
+        <div class="row row-cols-4">
+            {% for pokemon in listings %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{pokemon.imageUrl}}" alt="{{pokemon.title}}" class="card-img-top">
+                    <div class="card-body text-center">
+                        <p class="text-muted mb-1">#{{pokemon.id}}</p>
+                        <h5 class="card-title">{{pokemon.title}}</h5>
+                        <div class="d-flex justify-content-center gap-2 mt-2">
+                            {% for category in pokemon.categories %}
+                                <span class="type-badge {{category.category}}">{{category.category}}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
 {% endblock %}
