@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>{{poke.title}}</h2>
+
+    <div class="container">
+        <div class="image">
+            <img src="{{poke.imageUrl}}" alt="{{poke.title}}" class="poke-image" >
+        </div>
+        
+        <div class="description">
+            <p class="poke-description" style="font-size: large;">{{poke.description}}</p>
+        </div>
+        
+        <div class="type">
+            {% for type in poke.categories %}
+                <span class="poke-type">{{poke.category}}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="container-comment">
+            <textarea name="comment" id="comment" class="comment" placeholder="Comment of you for pokemon"></textarea>
+            <button type="submit" class="button" id="button"> Click here</button>
+        </div>
+    </div>
+{% endblock %}

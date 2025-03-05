@@ -9,26 +9,30 @@ from .models import *
 
 
 def index(request):
-    # Get list pokemon
-    list_pokemons = Listing.objects.all()
+    try:
+        # Get list pokemon
+        list_pokemons = Listing.objects.all()
 
-    listings = []
+        listings = []
 
-    for pokemon in list_pokemons:
-        if not pokemon.isActive:
-            continue 
-        categories = []
-        for category in pokemon.category.all():
-            categories.append(category)
-        listing = {
-            'id': pokemon.id,
-            'title': pokemon.title,
-            'imageUrl':pokemon.imageUrl,
-            'categories': categories,
-        }
-        
-        listings.append(listing)
-        
+        for pokemon in list_pokemons:
+            if not pokemon.isActive:
+                continue 
+            categories = []
+            for category in pokemon.category.all():
+                categories.append(category)
+            listing = {
+                'id': pokemon.id,
+                'title': pokemon.title,
+                'imageUrl':pokemon.imageUrl,
+                'categories': categories,
+            }
+            
+            listings.append(listing)
+    except Listing.DoesNotExist:
+        HttpResponse("Objects do not exist")        
+    except Listing.FieldError:
+        HttpResponse("Field error in query")
     
     return render(request, "auctions/index.html", {
         "listings": listings,
@@ -140,3 +144,31 @@ def create_listing(request):
         return render(request, "auctions/create.html", {
             "categories": cat,
         })
+
+def detail_view(request, id):
+    try:
+        # get pokemon object follow id
+        pokemon = Listing.objects.get(id=id)
+        
+        
+        categories = []
+        for category in pokemon.category.all():
+            categories.append(category)
+        
+        poke = {
+            'id': pokemon.id,
+            'title': pokemon.title,
+            'description': pokemon.description,
+            'imageUrl':pokemon.imageUrl,
+            'categories': categories,
+        }
+        
+        print(poke)
+
+        return render(request, "auctions/details.html", {
+            'poke':poke,
+        })
+    except ObjectDoesNotExist:
+        return HttpResponse("Object does not exist")
+    
+    
