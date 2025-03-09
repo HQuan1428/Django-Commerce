@@ -24,6 +24,7 @@ def index(request):
             listing = {
                 'id': pokemon.id,
                 'title': pokemon.title,
+                'price': "0" if pokemon.price is None else pokemon.price,
                 'imageUrl':pokemon.imageUrl,
                 'categories': categories,
             }
@@ -148,8 +149,7 @@ def create_listing(request):
 def detail_view(request, id):
     try:
         # get pokemon object follow id
-        pokemon = Listing.objects.get(id=id)
-        
+        pokemon = Listing.objects.get(id=id)        
         
         categories = []
         for category in pokemon.category.all():
@@ -158,12 +158,12 @@ def detail_view(request, id):
         poke = {
             'id': pokemon.id,
             'title': pokemon.title,
+            'price': "0" if pokemon.price is None else pokemon.price,
             'description': pokemon.description,
             'imageUrl':pokemon.imageUrl,
             'categories': categories,
         }
         
-        print(poke)
 
         return render(request, "auctions/details.html", {
             'poke':poke,

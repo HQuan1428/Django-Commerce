@@ -14,6 +14,7 @@
                     <div class="card-body text-center">
                         <p class="text-muted mb-1">#{{pokemon.id}}</p>
                         <h5 class="card-title">{{pokemon.title}}</h5>
+                        <h6 class="card-title">${{pokemon.price}}</h6>
                         <div class="d-flex justify-content-center gap-2 mt-2">
                             {% for category in pokemon.categories %}
                                 <span class="type-badge {{category.category}}">{{category.category}}</span>
@@ -21,7 +22,7 @@
                             
                         </div>
                         <div class="button" >
-                            <button class="btn btn-primary btn-sm" onclick="add_watchlist(event, this)" >Add Watchlist</button>
+                            <button type="button" class="btn btn-primary btn-sm"  onclick="add_watchlist(event, this)">Add Watchlist</button>
                         </div>
                     </div>
                 </div>
@@ -39,13 +40,15 @@
     function add_watchlist(event, element) {
         event.stopPropagation();
         let content = element.innerHTML;
-        console.log("Hello");
-        console.log(content);
-        if (content.includes("Add")) {
-            content = content.replace("Add Watchlist", "Remove Watchlist");
+        if (content.includes("Add"))    {
+            element.innerHTML = "Remove Watchlist";
+            element.classList.remove("btn-primary");
+            element.classList.add("btn-danger");
         }
-        else if (content.includes("Remove")){
-            content = content.replace("Remove Watchlist", "Add Watchlist");
+        else {
+            element.innerHTML = "Add Watchlist";
+            element.classList.remove("btn-danger");
+            element.classList.add("btn-primary"); 
         }
     }
 
