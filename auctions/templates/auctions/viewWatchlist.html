@@ -1,13 +1,12 @@
 {% extends "auctions/layout.html" %}
 
 
-</style>
 {% block body %}
     <h2>Active Listings</h2>
 
     <div class="container text-center">
         <div class="row row-cols-4">
-            {% for pokemon in listings %}
+            {% for pokemon in watchlists %}
             <div class="col" data-url="{% url 'detail' id=pokemon.id %}" onclick="detail(this)">
                 <div class="card shadow-sm">
                     <img src="{{pokemon.imageUrl}}" alt="{{pokemon.title}}" class="card-img-top">
@@ -66,7 +65,7 @@
                     element.classList.remove("btn-danger");
                     element.classList.add("btn-primary");
                 }
-                
+                location.reload(true)
         })
     }
 
